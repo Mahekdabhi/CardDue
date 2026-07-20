@@ -67,12 +67,12 @@ class DashboardView extends ConsumerWidget {
                       children: [
                         IconButton(
                           icon: Icon(Icons.bar_chart_rounded, color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155), size: 28),
-                          onPressed: () => context.go('/analytics'),
+                          onPressed: () => context.push('/analytics'),
                           tooltip: 'Analytics',
                         ),
                         IconButton(
                           icon: Icon(Icons.settings_rounded, color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155), size: 26),
-                          onPressed: () => context.go('/settings'),
+                          onPressed: () => context.push('/settings'),
                           tooltip: 'Settings',
                         ),
                       ],
@@ -280,7 +280,7 @@ class DashboardView extends ConsumerWidget {
                         final card = filteredCards[index];
                         return CreditCardWidget(
                           card: card,
-                          onEdit: () => context.go('/edit-card/${card.id}'),
+                          onEdit: () => context.push('/edit-card/${card.id}'),
                           onActionMenu: () => _showActionMenu(context, ref, card, dividerColor),
                         );
                       },
@@ -295,7 +295,7 @@ class DashboardView extends ConsumerWidget {
         foregroundColor: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        onPressed: () => context.go('/add-card'),
+        onPressed: () => context.push('/add-card'),
         icon: const Icon(Icons.add_rounded),
         label: const Text('Add Card', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w700)),
       ),

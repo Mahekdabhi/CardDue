@@ -63,6 +63,13 @@ class AppTheme {
           side: const BorderSide(color: AppColors.lightBorder, width: 1),
         ),
       ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        },
+      ),
     );
   }
 
@@ -123,6 +130,13 @@ class AppTheme {
           borderRadius: BorderRadius.circular(28),
           side: const BorderSide(color: AppColors.darkBorder, width: 1),
         ),
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        },
       ),
     );
   }
