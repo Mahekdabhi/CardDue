@@ -35,7 +35,7 @@ Designed with Material 3 and Apple-inspired minimalist aesthetics, the app helps
 No App Store is required. Follow these steps to run CardDue as a native app:
 
 1.  Open **Safari** on your iPhone.
-2.  Navigate to your deployed GitHub Pages link: `https://<your-username>.github.io/CardDue/`
+2.  Navigate to your deployed GitHub Pages link: [https://mahekdabhi.github.io/CardDue/](https://mahekdabhi.github.io/CardDue/)
 3.  Tap the **Share** button at the bottom of the screen.
 4.  Scroll down the share sheet and tap **Add to Home Screen**.
 5.  Tap **Add** in the top-right corner.
