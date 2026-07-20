@@ -8,6 +8,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/providers/theme_provider.dart';
 import '../../../../core/utils/file_helper.dart';
 import '../../../../widgets/glass_container.dart';
+import '../../../../widgets/top_toast.dart';
 import '../../../cards/domain/models/credit_card.dart';
 import '../../../cards/presentation/viewmodels/card_viewmodel.dart';
 import '../../../payments/domain/models/payment_record.dart';
@@ -35,7 +36,7 @@ class SettingsView extends ConsumerWidget {
         title: const Text('Settings', style: TextStyle(fontFamily: 'Outfit')),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go('/'),
         ),
       ),
       body: SafeArea(
@@ -226,14 +227,20 @@ class SettingsView extends ConsumerWidget {
       );
 
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Backup exported successfully! Check downloads.')),
+        TopToast.show(
+          context,
+          'Backup exported successfully! Check downloads.',
+          backgroundColor: AppColors.paid,
+          icon: Icons.check_circle_outline_rounded,
         );
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.overdue),
+        TopToast.show(
+          context,
+          'Export failed: $e',
+          backgroundColor: AppColors.overdue,
+          icon: Icons.error_outline_rounded,
         );
       }
     }
@@ -272,21 +279,21 @@ class SettingsView extends ConsumerWidget {
         await ref.read(paymentViewModelProvider.notifier).restoreBackup(importedPayments);
 
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: AppColors.paid,
-              content: Text('Backup restored successfully! Cards and logs recovered.'),
-            ),
+          TopToast.show(
+            context,
+            'Backup restored successfully! Cards and logs recovered.',
+            backgroundColor: AppColors.paid,
+            icon: Icons.check_circle_outline_rounded,
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: AppColors.overdue,
-            content: Text('Import failed: Check file format. ($e)'),
-          ),
+        TopToast.show(
+          context,
+          'Import failed: Check file format. ($e)',
+          backgroundColor: AppColors.overdue,
+          icon: Icons.error_outline_rounded,
         );
       }
     }
@@ -311,10 +318,11 @@ class SettingsView extends ConsumerWidget {
               await ref.read(paymentViewModelProvider.notifier).clearAll();
               
               if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('App database cleared successfully.'),
-                  ),
+                TopToast.show(
+                  context,
+                  'App database cleared successfully.',
+                  backgroundColor: AppColors.warning,
+                  icon: Icons.delete_sweep_rounded,
                 );
               }
             },

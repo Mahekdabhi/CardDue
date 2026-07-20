@@ -5,6 +5,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/services/ics_service.dart';
 import '../../../../widgets/glass_container.dart';
 import '../../../../widgets/input_field.dart';
+import '../../../../widgets/top_toast.dart';
 import '../../../analytics/presentation/viewmodels/analytics_viewmodel.dart';
 import '../../../cards/domain/models/credit_card.dart';
 import '../../../cards/presentation/viewmodels/card_viewmodel.dart';
@@ -66,12 +67,12 @@ class DashboardView extends ConsumerWidget {
                       children: [
                         IconButton(
                           icon: Icon(Icons.bar_chart_rounded, color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155), size: 28),
-                          onPressed: () => context.push('/analytics'),
+                          onPressed: () => context.go('/analytics'),
                           tooltip: 'Analytics',
                         ),
                         IconButton(
                           icon: Icon(Icons.settings_rounded, color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155), size: 26),
-                          onPressed: () => context.push('/settings'),
+                          onPressed: () => context.go('/settings'),
                           tooltip: 'Settings',
                         ),
                       ],
@@ -279,7 +280,7 @@ class DashboardView extends ConsumerWidget {
                         final card = filteredCards[index];
                         return CreditCardWidget(
                           card: card,
-                          onEdit: () => context.push('/edit-card/${card.id}'),
+                          onEdit: () => context.go('/edit-card/${card.id}'),
                           onActionMenu: () => _showActionMenu(context, ref, card, dividerColor),
                         );
                       },
@@ -294,7 +295,7 @@ class DashboardView extends ConsumerWidget {
         foregroundColor: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        onPressed: () => context.push('/add-card'),
+        onPressed: () => context.go('/add-card'),
         icon: const Icon(Icons.add_rounded),
         label: const Text('Add Card', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w700)),
       ),
@@ -401,8 +402,11 @@ class DashboardView extends ConsumerWidget {
                   await IcsService.generateAndDownloadIcs(card, nextDue);
                   
                   if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Calendar file download triggered successfully!')),
+                  TopToast.show(
+                    context,
+                    'Calendar file download triggered successfully!',
+                    backgroundColor: AppColors.paid,
+                    icon: Icons.check_circle_outline_rounded,
                   );
                 },
               ),
@@ -543,11 +547,11 @@ class DashboardView extends ConsumerWidget {
 
                   if (!context.mounted) return;
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: AppColors.paid,
-                      content: Text('Logged payment of ₹${amount.toStringAsFixed(2)} successfully!'),
-                    ),
+                  TopToast.show(
+                    context,
+                    'Logged payment of ₹${amount.toStringAsFixed(2)} successfully!',
+                    backgroundColor: AppColors.paid,
+                    icon: Icons.check_circle_outline_rounded,
                   );
                 }
               },

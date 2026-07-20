@@ -6,6 +6,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../widgets/input_field.dart';
 import '../../../../widgets/premium_button.dart';
+import '../../../../widgets/top_toast.dart';
 import '../../domain/models/credit_card.dart';
 import '../viewmodels/card_viewmodel.dart';
 import '../widgets/credit_card_widget.dart';
@@ -138,7 +139,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
         title: Text(_isEditing ? 'Edit Card' : 'Add Credit Card', style: const TextStyle(fontFamily: 'Outfit')),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go('/'),
         ),
       ),
       body: SafeArea(
@@ -494,11 +495,14 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
           notes: notes,
         );
         await cardNotifier.updateCard(updated);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Card updated successfully!')),
-          );
-        }
+        
+        if (!mounted) return;
+        TopToast.show(
+          context,
+          'Card updated successfully!',
+          backgroundColor: AppColors.paid,
+          icon: Icons.check_circle_outline_rounded,
+        );
       } else {
         await cardNotifier.addCard(
           bankName: bank,
@@ -514,16 +518,18 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
           minimumDue: minDue,
           notes: notes,
         );
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Credit card added successfully!')),
-          );
-        }
+        
+        if (!mounted) return;
+        TopToast.show(
+          context,
+          'Credit card added successfully!',
+          backgroundColor: AppColors.paid,
+          icon: Icons.check_circle_outline_rounded,
+        );
       }
 
-      if (mounted) {
-        context.pop();
-      }
+      if (!mounted) return;
+      context.go('/');
     }
   }
 }
