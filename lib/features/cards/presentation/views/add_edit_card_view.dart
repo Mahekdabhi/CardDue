@@ -300,7 +300,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
                         children: [
                           Expanded(
                             child: PremiumInputField(
-                              labelText: 'Credit Limit (\$)',
+                              labelText: 'Credit Limit (₹)',
                               hintText: '10000',
                               controller: _limitController,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -314,7 +314,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: PremiumInputField(
-                              labelText: 'Outstanding (\$)',
+                              labelText: 'Outstanding (₹)',
                               hintText: '0.00',
                               controller: _outstandingController,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -328,7 +328,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: PremiumInputField(
-                              labelText: 'Min Due (\$)',
+                              labelText: 'Min Due (₹)',
                               hintText: '0.00',
                               controller: _minDueController,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),

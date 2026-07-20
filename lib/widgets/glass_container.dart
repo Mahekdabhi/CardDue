@@ -35,6 +35,23 @@ class GlassContainer extends StatelessWidget {
         ? Colors.white.withValues(alpha: 0.08) 
         : Colors.black.withValues(alpha: 0.06));
 
+    // Performance Optimization: Skip BackdropFilter entirely if blur is 0
+    if (blur == 0.0) {
+      return Container(
+        padding: padding,
+        decoration: BoxDecoration(
+          color: defaultColor,
+          shape: shape,
+          borderRadius: shape == BoxShape.circle ? null : BorderRadius.circular(borderRadius),
+          border: Border.all(
+            color: defaultBorderColor,
+            width: borderWidth,
+          ),
+        ),
+        child: child,
+      );
+    }
+
     return ClipRRect(
       borderRadius: shape == BoxShape.circle ? BorderRadius.zero : BorderRadius.circular(borderRadius),
       clipBehavior: Clip.antiAlias,

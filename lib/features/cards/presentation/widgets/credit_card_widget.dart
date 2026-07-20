@@ -187,8 +187,8 @@ class CreditCardWidget extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           isPaid 
-                              ? '\$${card.creditLimit.toStringAsFixed(0)}'
-                              : '\$${card.outstandingAmount.toStringAsFixed(2)}',
+                              ? '₹${card.creditLimit.toStringAsFixed(0)}'
+                              : '₹${card.outstandingAmount.toStringAsFixed(2)}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,

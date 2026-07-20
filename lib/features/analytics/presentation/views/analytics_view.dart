@@ -42,10 +42,11 @@ class AnalyticsView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Credit Utilization Gauge Card
+              // 1. Credit Utilization Gauge Card (Static top card: optimized to blur 10)
               GlassContainer(
                 padding: const EdgeInsets.all(24),
                 borderRadius: 24,
+                blur: 10,
                 child: Row(
                   children: [
                     Expanded(
@@ -117,7 +118,7 @@ class AnalyticsView extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
 
-              // 2. Custom Trailing 6-Month Payment Chart
+              // 2. Custom Trailing 6-Month Payment Chart (Static top card: optimized to blur 10)
               Text(
                 'Payment History Trend',
                 style: theme.textTheme.titleLarge?.copyWith(
@@ -129,6 +130,7 @@ class AnalyticsView extends ConsumerWidget {
               GlassContainer(
                 padding: const EdgeInsets.all(24),
                 borderRadius: 24,
+                blur: 10,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -140,7 +142,7 @@ class AnalyticsView extends ConsumerWidget {
                           style: TextStyle(color: slate500, fontSize: 13),
                         ),
                         Text(
-                          '\$${analytics.monthlyPaidAmount.toStringAsFixed(2)}',
+                          '₹${analytics.monthlyPaidAmount.toStringAsFixed(2)}',
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ],
@@ -165,7 +167,7 @@ class AnalyticsView extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Tooltip(
-                                  message: '\$${amount.toStringAsFixed(2)}',
+                                  message: '₹${amount.toStringAsFixed(2)}',
                                   child: AnimatedContainer(
                                     duration: const Duration(milliseconds: 400),
                                     margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -200,7 +202,7 @@ class AnalyticsView extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
 
-              // 3. Card breakdown list
+              // 3. Card breakdown list (Scrollable list items: optimized to blur 0)
               Text(
                 'Theme and Utilization Details',
                 style: theme.textTheme.titleLarge?.copyWith(
@@ -223,6 +225,7 @@ class AnalyticsView extends ConsumerWidget {
                     child: GlassContainer(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       borderRadius: 16,
+                      blur: 0, // Bypasses BackdropFilter for maximum scroll performance
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -236,7 +239,7 @@ class AnalyticsView extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Outstanding: \$${outstanding.toStringAsFixed(2)}',
+                                  'Outstanding: ₹${outstanding.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: slate500,
                                     fontSize: 12,

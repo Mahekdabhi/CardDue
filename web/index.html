@@ -21,26 +21,47 @@
   <title>CardDue - Premium Credit Card Bill Reminder</title>
   <link rel="manifest" href="manifest.json">
 </head>
-<body style="background-color: #0A0E17;">
-  <!-- Loading spinner placeholder to show before Flutter loads -->
-  <div id="loading" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #FFFFFF; background-color: #0A0E17;">
-    <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 24px;">CardDue</div>
-    <div class="spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.1); border-radius: 50%; border-top-color: #3b82f6; animation: spin 1s ease-in-out infinite;"></div>
+<body style="background-color: #0A0E17; margin: 0; padding: 0; overflow: hidden; width: 100vw; height: 100vh;">
+  <!-- Loading Splash Screen -->
+  <div id="loading" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100vw; height: 100vh; background-color: #0A0E17; opacity: 1; transition: opacity 0.4s ease-out; position: fixed; top: 0; left: 0; z-index: 99999; pointer-events: none;">
+    <div style="text-align: center;">
+      <!-- Pulsating App Icon -->
+      <img src="icons/Icon-192.png" alt="CardDue Logo" style="width: 84px; height: 84px; border-radius: 20px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); margin-bottom: 24px; animation: pulse 2.2s infinite ease-in-out;">
+      <!-- Title & Branding -->
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Outfit', 'Segoe UI', Roboto, sans-serif; font-size: 32px; font-weight: 900; letter-spacing: -1.2px; color: #FFFFFF; margin-bottom: 8px;">CardDue</div>
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; color: #64748B; letter-spacing: 2px;">SECURE • OFFLINE • PERSONAL</div>
+    </div>
+    <!-- Modern iOS Indigo Spinner -->
+    <div style="margin-top: 54px;">
+      <div class="spinner" style="width: 24px; height: 24px; border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 50%; border-top-color: #6366F1; animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></div>
+    </div>
+    
     <style>
       @keyframes spin {
         to { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.95; }
+        50% { transform: scale(1.04); opacity: 1; filter: brightness(1.05); }
       }
     </style>
   </div>
 
   <script>
-    window.addEventListener('load', function(ev) {
-      // Remove loading indicator when bootstrap finishes loading
-      var loading = document.getElementById('loading');
-      if (loading) {
-        // Flutter bootstrap will load in body
+    // Monitor DOM to fade out and remove splash screen as soon as Flutter renders its first canvas
+    var checkInterval = setInterval(function() {
+      var glassPane = document.querySelector('flt-glass-pane');
+      if (glassPane) {
+        clearInterval(checkInterval);
+        var loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.opacity = '0';
+          setTimeout(function() {
+            loading.remove();
+          }, 400); // Wait for CSS transition to finish before removing from DOM
+        }
       }
-    });
+    }, 50); // Fast check rate for a snappy loading experience
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

@@ -88,6 +88,7 @@ class DashboardView extends ConsumerWidget {
                 child: GlassContainer(
                   padding: const EdgeInsets.all(24),
                   borderRadius: 28,
+                  blur: 10,
                   child: Column(
                     children: [
                       Row(
@@ -106,7 +107,7 @@ class DashboardView extends ConsumerWidget {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                '\$${analytics.totalOutstanding.toStringAsFixed(2)}',
+                                '₹${analytics.totalOutstanding.toStringAsFixed(2)}',
                                 style: theme.textTheme.headlineMedium?.copyWith(
                                   fontFamily: 'Outfit',
                                   fontWeight: FontWeight.w800,
@@ -159,14 +160,14 @@ class DashboardView extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Limit: \$${analytics.totalCreditLimit.toStringAsFixed(0)}',
+                            'Limit: ₹${analytics.totalCreditLimit.toStringAsFixed(0)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondaryColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            'Due This Month: \$${analytics.monthlyOutstandingAmount.toStringAsFixed(0)}',
+                            'Due This Month: ₹${analytics.monthlyOutstandingAmount.toStringAsFixed(0)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondaryColor,
                               fontWeight: FontWeight.w500,
@@ -489,7 +490,7 @@ class DashboardView extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 PremiumInputField(
-                  labelText: 'Paid Amount (\$)',
+                  labelText: 'Paid Amount (₹)',
                   controller: amountController,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   validator: (val) {
@@ -545,7 +546,7 @@ class DashboardView extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: AppColors.paid,
-                      content: Text('Logged payment of \$${amount.toStringAsFixed(2)} successfully!'),
+                      content: Text('Logged payment of ₹${amount.toStringAsFixed(2)} successfully!'),
                     ),
                   );
                 }

@@ -51,6 +51,7 @@ class SettingsView extends ConsumerWidget {
               GlassContainer(
                 padding: const EdgeInsets.all(20),
                 borderRadius: 20,
+                blur: 0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -78,6 +79,7 @@ class SettingsView extends ConsumerWidget {
               GlassContainer(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 borderRadius: 20,
+                blur: 0,
                 child: Column(
                   children: [
                     ListTile(
@@ -111,6 +113,7 @@ class SettingsView extends ConsumerWidget {
               GlassContainer(
                 padding: const EdgeInsets.all(24),
                 borderRadius: 20,
+                blur: 0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
