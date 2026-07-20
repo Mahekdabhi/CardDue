@@ -36,7 +36,13 @@ class SettingsView extends ConsumerWidget {
         title: const Text('Settings', style: TextStyle(fontFamily: 'Outfit')),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/');
+            }
+          },
         ),
       ),
       body: SafeArea(
