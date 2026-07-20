@@ -38,6 +38,7 @@ mixin _$CreditCard {
   String get paymentStatus =>
       throw _privateConstructorUsedError; // 'Paid', 'Unpaid', 'Overdue', 'Archived'
   String get notes => throw _privateConstructorUsedError;
+  String get reminderTime => throw _privateConstructorUsedError;
   DateTime get createdDate => throw _privateConstructorUsedError;
   DateTime get updatedDate => throw _privateConstructorUsedError;
 
@@ -73,6 +74,7 @@ abstract class $CreditCardCopyWith<$Res> {
     double minimumDue,
     String paymentStatus,
     String notes,
+    String reminderTime,
     DateTime createdDate,
     DateTime updatedDate,
   });
@@ -107,6 +109,7 @@ class _$CreditCardCopyWithImpl<$Res, $Val extends CreditCard>
     Object? minimumDue = null,
     Object? paymentStatus = null,
     Object? notes = null,
+    Object? reminderTime = null,
     Object? createdDate = null,
     Object? updatedDate = null,
   }) {
@@ -168,6 +171,10 @@ class _$CreditCardCopyWithImpl<$Res, $Val extends CreditCard>
                 ? _value.notes
                 : notes // ignore: cast_nullable_to_non_nullable
                       as String,
+            reminderTime: null == reminderTime
+                ? _value.reminderTime
+                : reminderTime // ignore: cast_nullable_to_non_nullable
+                      as String,
             createdDate: null == createdDate
                 ? _value.createdDate
                 : createdDate // ignore: cast_nullable_to_non_nullable
@@ -206,6 +213,7 @@ abstract class _$$CreditCardImplCopyWith<$Res>
     double minimumDue,
     String paymentStatus,
     String notes,
+    String reminderTime,
     DateTime createdDate,
     DateTime updatedDate,
   });
@@ -239,6 +247,7 @@ class __$$CreditCardImplCopyWithImpl<$Res>
     Object? minimumDue = null,
     Object? paymentStatus = null,
     Object? notes = null,
+    Object? reminderTime = null,
     Object? createdDate = null,
     Object? updatedDate = null,
   }) {
@@ -300,6 +309,10 @@ class __$$CreditCardImplCopyWithImpl<$Res>
             ? _value.notes
             : notes // ignore: cast_nullable_to_non_nullable
                   as String,
+        reminderTime: null == reminderTime
+            ? _value.reminderTime
+            : reminderTime // ignore: cast_nullable_to_non_nullable
+                  as String,
         createdDate: null == createdDate
             ? _value.createdDate
             : createdDate // ignore: cast_nullable_to_non_nullable
@@ -331,6 +344,7 @@ class _$CreditCardImpl implements _CreditCard {
     required this.minimumDue,
     required this.paymentStatus,
     required this.notes,
+    this.reminderTime = '09:00',
     required this.createdDate,
     required this.updatedDate,
   });
@@ -372,13 +386,16 @@ class _$CreditCardImpl implements _CreditCard {
   @override
   final String notes;
   @override
+  @JsonKey()
+  final String reminderTime;
+  @override
   final DateTime createdDate;
   @override
   final DateTime updatedDate;
 
   @override
   String toString() {
-    return 'CreditCard(id: $id, bankName: $bankName, cardName: $cardName, cardType: $cardType, last4Digits: $last4Digits, cardColor: $cardColor, creditLimit: $creditLimit, statementDate: $statementDate, dueDate: $dueDate, reminderDaysBefore: $reminderDaysBefore, outstandingAmount: $outstandingAmount, minimumDue: $minimumDue, paymentStatus: $paymentStatus, notes: $notes, createdDate: $createdDate, updatedDate: $updatedDate)';
+    return 'CreditCard(id: $id, bankName: $bankName, cardName: $cardName, cardType: $cardType, last4Digits: $last4Digits, cardColor: $cardColor, creditLimit: $creditLimit, statementDate: $statementDate, dueDate: $dueDate, reminderDaysBefore: $reminderDaysBefore, outstandingAmount: $outstandingAmount, minimumDue: $minimumDue, paymentStatus: $paymentStatus, notes: $notes, reminderTime: $reminderTime, createdDate: $createdDate, updatedDate: $updatedDate)';
   }
 
   @override
@@ -411,6 +428,8 @@ class _$CreditCardImpl implements _CreditCard {
             (identical(other.paymentStatus, paymentStatus) ||
                 other.paymentStatus == paymentStatus) &&
             (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.reminderTime, reminderTime) ||
+                other.reminderTime == reminderTime) &&
             (identical(other.createdDate, createdDate) ||
                 other.createdDate == createdDate) &&
             (identical(other.updatedDate, updatedDate) ||
@@ -435,6 +454,7 @@ class _$CreditCardImpl implements _CreditCard {
     minimumDue,
     paymentStatus,
     notes,
+    reminderTime,
     createdDate,
     updatedDate,
   );
@@ -469,6 +489,7 @@ abstract class _CreditCard implements CreditCard {
     required final double minimumDue,
     required final String paymentStatus,
     required final String notes,
+    final String reminderTime,
     required final DateTime createdDate,
     required final DateTime updatedDate,
   }) = _$CreditCardImpl;
@@ -504,6 +525,8 @@ abstract class _CreditCard implements CreditCard {
   String get paymentStatus; // 'Paid', 'Unpaid', 'Overdue', 'Archived'
   @override
   String get notes;
+  @override
+  String get reminderTime;
   @override
   DateTime get createdDate;
   @override

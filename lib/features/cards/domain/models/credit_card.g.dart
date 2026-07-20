@@ -22,6 +22,7 @@ _$CreditCardImpl _$$CreditCardImplFromJson(Map<String, dynamic> json) =>
       minimumDue: (json['minimumDue'] as num).toDouble(),
       paymentStatus: json['paymentStatus'] as String,
       notes: json['notes'] as String,
+      reminderTime: json['reminderTime'] as String? ?? '09:00',
       createdDate: DateTime.parse(json['createdDate'] as String),
       updatedDate: DateTime.parse(json['updatedDate'] as String),
     );
@@ -42,6 +43,7 @@ Map<String, dynamic> _$$CreditCardImplToJson(_$CreditCardImpl instance) =>
       'minimumDue': instance.minimumDue,
       'paymentStatus': instance.paymentStatus,
       'notes': instance.notes,
+      'reminderTime': instance.reminderTime,
       'createdDate': instance.createdDate.toIso8601String(),
       'updatedDate': instance.updatedDate.toIso8601String(),
     };

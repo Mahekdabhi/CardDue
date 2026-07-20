@@ -85,6 +85,7 @@ class CardNotifier extends StateNotifier<CardState> {
     required double outstandingAmount,
     required double minimumDue,
     required String notes,
+    required String reminderTime,
   }) async {
     final now = DateTime.now();
     final card = CreditCard(
@@ -102,6 +103,7 @@ class CardNotifier extends StateNotifier<CardState> {
       minimumDue: minimumDue,
       paymentStatus: outstandingAmount == 0 ? 'Paid' : 'Unpaid',
       notes: notes,
+      reminderTime: reminderTime,
       createdDate: now,
       updatedDate: now,
     );

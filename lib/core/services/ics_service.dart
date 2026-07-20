@@ -5,25 +5,41 @@ import '../utils/file_helper.dart';
 class IcsService {
   IcsService._();
 
-  /// Generates and triggers download of an .ics calendar file for a card's due date.
+  /// Generates and triggers download of an .ics calendar file for a card's due date at a custom time.
   static Future<void> generateAndDownloadIcs(CreditCard card, DateTime resolvedDueDate) async {
     final bankName = card.bankName;
     final outstanding = card.outstandingAmount;
     final notes = card.notes;
     final reminderDays = card.reminderDaysBefore;
+    final reminderTime = card.reminderTime; // e.g. '09:00' or '20:30'
 
-    final dateFormat = DateFormat('yyyyMMdd');
+    // Parse hour and minute from the custom reminderTime setting
+    final timeParts = reminderTime.split(':');
+    final hour = timeParts.isNotEmpty ? (int.tryParse(timeParts[0]) ?? 9) : 9;
+    final minute = timeParts.length > 1 ? (int.tryParse(timeParts[1]) ?? 0) : 0;
+
+    // Create the start and end DateTime in local floating time
+    final eventStart = DateTime(
+      resolvedDueDate.year,
+      resolvedDueDate.month,
+      resolvedDueDate.day,
+      hour,
+      minute,
+    );
+    final eventEnd = eventStart.add(const Duration(hours: 1));
+
+    // Formatter for UTC stamping
     final dtstampFormat = DateFormat("yyyyMMdd'T'HHmmss'Z'");
-
     final now = DateTime.now().toUtc();
     final dtstamp = dtstampFormat.format(now);
-    final dtstart = dateFormat.format(resolvedDueDate);
-    
-    // All-day event end date is exclusive (day after start date)
-    final dtend = dateFormat.format(resolvedDueDate.add(const Duration(days: 1)));
 
-    // Alarm trigger (e.g., -P1D for 1 day before, or -PT9H for 9:00 AM on due day)
-    final trigger = reminderDays > 0 ? '-P${reminderDays}D' : '-PT9H';
+    // Formatter for local floating time (No 'Z' suffix, so it floats to user's device local timezone)
+    final floatTimeFormat = DateFormat("yyyyMMdd'T'HHmmss");
+    final dtstart = floatTimeFormat.format(eventStart);
+    final dtend = floatTimeFormat.format(eventEnd);
+
+    // Alarm trigger: exactly at event time ('PT0M') or relative days before ('-P[N]D')
+    final trigger = reminderDays > 0 ? '-P${reminderDays}D' : 'PT0M';
 
     final cleanNotes = notes.replaceAll('\n', '\\n').replaceAll('\r', '');
 
@@ -36,8 +52,8 @@ class IcsService {
       ..writeln('BEGIN:VEVENT')
       ..writeln('UID:${card.id}_${resolvedDueDate.millisecondsSinceEpoch}@carddue.com')
       ..writeln('DTSTAMP:$dtstamp')
-      ..writeln('DTSTART;VALUE=DATE:$dtstart')
-      ..writeln('DTEND;VALUE=DATE:$dtend')
+      ..writeln('DTSTART:$dtstart')
+      ..writeln('DTEND:$dtend')
       ..writeln('SUMMARY:Pay $bankName Credit Card Bill')
       ..writeln('DESCRIPTION:Outstanding Amount: ${outstanding.toStringAsFixed(2)}\\nMinimum Due: ${card.minimumDue.toStringAsFixed(2)}\\nNotes: $cleanNotes')
       ..writeln('BEGIN:VALARM')

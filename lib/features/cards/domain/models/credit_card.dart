@@ -20,6 +20,7 @@ class CreditCard with _$CreditCard {
     required double minimumDue,
     required String paymentStatus, // 'Paid', 'Unpaid', 'Overdue', 'Archived'
     required String notes,
+    @Default('09:00') String reminderTime,
     required DateTime createdDate,
     required DateTime updatedDate,
   }) = _CreditCard;

@@ -36,6 +36,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
   int _selectedStatementDate = 1;
   int _selectedDueDate = 15;
   int _selectedReminderDays = 1;
+  String _selectedReminderTime = '09:00';
 
   bool _isEditing = false;
   CreditCard? _originalCard;
@@ -90,6 +91,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
       _selectedStatementDate = card.statementDate;
       _selectedDueDate = card.dueDate;
       _selectedReminderDays = card.reminderDaysBefore;
+      _selectedReminderTime = card.reminderTime;
     });
   }
 
@@ -122,6 +124,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
       minimumDue: double.tryParse(_minDueController.text) ?? 0.0,
       paymentStatus: 'Unpaid',
       notes: _notesController.text,
+      reminderTime: _selectedReminderTime,
       createdDate: _originalCard?.createdDate ?? DateTime.now(),
       updatedDate: DateTime.now(),
     );
@@ -368,7 +371,12 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
                               },
                             ),
                           ),
-                          const SizedBox(width: 12),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      Row(
+                        children: [
                           Expanded(
                             child: _buildDropdown(
                               title: 'Remind Before',
@@ -377,6 +385,31 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
                               labelFormatter: (val) => val == 0 ? 'Same Day' : '$val days',
                               onChanged: (val) {
                                 if (val != null) setState(() => _selectedReminderDays = val);
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildDropdown<String>(
+                              title: 'Preferred Reminder Time',
+                              value: _selectedReminderTime,
+                              items: const ['08:00', '09:00', '10:00', '12:00', '14:00', '17:00', '18:00', '20:00', '21:00'],
+                              labelFormatter: (val) {
+                                switch (val) {
+                                  case '08:00': return '08:00 AM';
+                                  case '09:00': return '09:00 AM (Default)';
+                                  case '10:00': return '10:00 AM';
+                                  case '12:00': return '12:00 PM';
+                                  case '14:00': return '02:00 PM';
+                                  case '17:00': return '05:00 PM';
+                                  case '18:00': return '06:00 PM';
+                                  case '20:00': return '08:00 PM';
+                                  case '21:00': return '09:00 PM';
+                                  default: return val;
+                                }
+                              },
+                              onChanged: (val) {
+                                if (val != null) setState(() => _selectedReminderTime = val);
                               },
                             ),
                           ),
@@ -493,6 +526,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
           outstandingAmount: outstanding,
           minimumDue: minDue,
           notes: notes,
+          reminderTime: _selectedReminderTime,
         );
         await cardNotifier.updateCard(updated);
         
@@ -517,6 +551,7 @@ class _AddEditCardViewState extends ConsumerState<AddEditCardView> {
           outstandingAmount: outstanding,
           minimumDue: minDue,
           notes: notes,
+          reminderTime: _selectedReminderTime,
         );
         
         if (!mounted) return;
